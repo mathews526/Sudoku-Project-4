@@ -58,6 +58,10 @@ class SudokuGenerator:
 	Return: boolean
     '''
     def valid_in_row(self, row, num):
+	for col in range(self.row_length): #iterate each column in row
+	    if self.board[row][col] == num: #check if num is in the row
+		return False #num in row
+	return True
         pass
 
     '''
