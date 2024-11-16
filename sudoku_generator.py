@@ -134,7 +134,8 @@ class SudokuGenerator:
 	Return: None
     '''
     def fill_diagonal(self):
-        pass
+        for start_index in range(0, self.row_length, self.box_length):
+		self.fill_box(start_index, start_index)
 
     '''
     DO NOT CHANGE
