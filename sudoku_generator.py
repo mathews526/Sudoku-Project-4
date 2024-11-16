@@ -62,7 +62,6 @@ class SudokuGenerator:
 	    if self.board[row][col] == num: #check if num is in the row
 		return False #num in row
 	return True
-        pass
 
     '''
 	Determines if num is contained in the specified column (vertical) of the board
@@ -119,8 +118,14 @@ class SudokuGenerator:
 	Return: None
     '''
     def fill_box(self, row_start, col_start):
-        pass
-    
+	numbers = list(range(1, 10))
+	random.shuffle(numbers)
+
+	index = 0
+	for row in range(row_start, row_start + 3):
+	    for col in range(col_start, col_start + 3):
+		self.board[row][col] = numbers[index]
+		index += 1
     '''
     Fills the three boxes along the main diagonal of the board
     These are the boxes which start at (0,0), (3,3), and (6,6)
