@@ -111,10 +111,11 @@ class SudokuGenerator:
 	Return: boolean
     '''
     def is_valid(self, row, col, num):
-        if self.valid_in_row(row, num):
-            if self.valid_in_col(col, num):
-                return False
-        return True
+        if self.valid_in_row(row, num): # Checks if number is valid in the row
+            if self.valid_in_col(col, num): # Checks if number is valid in col
+                if self.valid_in_box(row, col, num): # Checks if number is valid in box
+                    return True
+        return False
 
     '''
     Fills the specified 3x3 box with values
