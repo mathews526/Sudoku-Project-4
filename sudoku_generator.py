@@ -35,7 +35,7 @@ class SudokuGenerator:
 	Return: list[list]
     '''
     def get_board(self):
-        return self.get_board
+        return self.get_board # debugging purposes
 
     '''
 	Displays the board to the console
@@ -92,7 +92,13 @@ class SudokuGenerator:
 	Return: boolean
     '''
     def valid_in_box(self, row_start, col_start, num):
-        pass
+        row_start = int(row_start - row_start % self.box_length) # where self.box_length = int(math.sqrt(row_length))
+        col_start = int(col_start - col_start % self.box_length)
+        for row in range(row_start, row_start + 2): # row_start = starting index of box, row_start + 2 = length of box
+            for col in range(col_start, col_start + 2): # col_start = starting index of box, col_start + 2 = height of box
+                if num == self.board[row][col]:
+                    return False # num is contained in the specified box
+        return True # num is not contained in the specified box; empty square
     
     '''
     Determines if it is valid to enter num at (row, col) in the board
