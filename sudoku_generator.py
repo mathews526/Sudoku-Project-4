@@ -35,7 +35,7 @@ class SudokuGenerator:
 	Return: list[list]
     '''
     def get_board(self):
-        return self.get_board # debugging purposes
+        return self.board
 
     '''
 	Displays the board to the console
@@ -45,7 +45,7 @@ class SudokuGenerator:
 	Return: None
     '''
     def print_board(self):
-        print(self.board)
+        print(self.board) # debugging purposes
 
     '''
 	Determines if num is contained in the specified row (horizontal) of the board
