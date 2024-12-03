@@ -13,6 +13,9 @@ class Board:
         self.removed_cells = {"easy": 20, "medium": 40, "hard": 50}[difficulty]
 
         self.board = generate_sudoku(9, self.removed_cells)
+        self.unedited_board = [row[:] for row in self.board]
+
+        self.selected_cell = None
         self.cells = [
             [Cell(self.board[row][col], row, col, screen) for col in range(9)] for row in range(9)
         ]
@@ -93,7 +96,9 @@ class Board:
 
 
     def clear(self):
-        pass
+        if self.selected_cell and self.unedited_board[self.selected_cell.row][self.selected_cell.col] == 0:
+            self.selected_cell.set_cell_value(0)
+            self.selected_cell.set_sketched_value(0)
 
 
     def sketch(self, value):
