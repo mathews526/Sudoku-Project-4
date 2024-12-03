@@ -23,8 +23,12 @@ class Board:
 
 
     def select(self, row, col):
-        pass
+        for r in range(9):
+            for c in range(9):
+                self.cells[r][c].selected = False
 
+        if 0 <= row < 9 and 0 <= col < 9:
+            self.cells[row][col].selected = True
 
     def click(self, x, y):
         pass
@@ -39,8 +43,12 @@ class Board:
 
 
     def place_number(self, value):
-        pass
-
+        for row in range(9):
+            for col in range(9):
+                if self.cells[row][col].selected:
+                    if self.cells[row][col] == 0:
+                        self.cells[row][col].value = value
+                    return
 
     def reset_to_original(self):
         pass
@@ -65,4 +73,25 @@ class Board:
 
 
     def check_board(self):
-        pass
+        self.update_board()
+
+        for row in self.board:
+            if len(set(row)) != 9 or 0 in row:
+                return False
+
+            for col in range(9):
+                column = [self.board[row][col] for row in range(9)]
+                if len(set(column)) != 9 or 0 in column:
+                    return False
+
+            for row_start in range(0, 9, 3):
+                for col_start in range(0, 9, 3):
+                    sub_grid = []
+                    for r in range(row_start, row_start + 3):
+                        for c in range(col_start, col_start + 3):
+                            sub_grid.append(self.board[r][c])
+
+                    if len(set(sub_grid)) != 9 or 0 in sub_grid:
+                        return False
+        return True
+
