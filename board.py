@@ -37,7 +37,8 @@ class Cell:
             sketch_rect = sketch_surf.get_rect(center=(x_sketch_center, y_sketch_center))
             self.screen.blit(sketch_surf, sketch_rect)
 
-        pygame.draw.rect(self.screen, (0, 0, 0),(self.col * self.cell_size, self.row * self.cell_size, self.cell_size, self.cell_size), 1)
+        border_color = (255, 0, 0) if self.selected else (0, 0, 0)
+        pygame.draw.rect(self.screen, border_color,(self.col * self.cell_size, self.row * self.cell_size, self.cell_size, self.cell_size), 3 if self.selected else 1)
 
 
 class Board:
