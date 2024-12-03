@@ -58,8 +58,12 @@ class Board:
 
 
     def is_full(self):
-        pass
-
+        #checks if board is completely filled
+        for row in self.board:
+            for cell in row:
+                if cell == 0: #if cell is 0, it's empty
+                    return False
+        return True
 
     def update_board(self):
         pass
