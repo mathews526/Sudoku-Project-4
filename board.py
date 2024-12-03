@@ -83,8 +83,13 @@ class Board:
         if 0 <= row < 9 and 0 <= col < 9:
             self.cells[row][col].selected = True
 
+
     def click(self, x, y):
-        pass
+        if 0 <= x <= self.width and 0 <= y <= self.height:
+            row = y // (self.height // 9)
+            col = x // (self.width // 9)
+            return row, col
+        return None
 
 
     def clear(self):
@@ -111,12 +116,14 @@ class Board:
                         self.cells[row][col].value = value
                     return
 
+
     def reset_to_original(self):
         for row in range(9):
             for col in range(9):
                 self.cells[row][col].value = self.board[row][col]
                 self.cells[row][col].sketched_value = 0
                 self.cells[row][col].selected = False
+
 
     def is_full(self):
         #checks if board is completely filled
@@ -125,6 +132,7 @@ class Board:
                 if cell == 0: #if cell is 0, it's empty
                     return False
         return True
+
 
     def update_board(self):
         self.board = [
