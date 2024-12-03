@@ -51,8 +51,11 @@ class Board:
                     return
 
     def reset_to_original(self):
-        pass
-
+        for row in range(9):
+            for col in range(9):
+                self.cells[row][col].value = self.board[row][col]
+                self.cells[row][col].sketched_value = 0
+                self.cells[row][col].selected = False
 
     def is_full(self):
         #checks if board is completely filled
