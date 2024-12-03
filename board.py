@@ -26,8 +26,6 @@ class Board:
         # draws every cell on this board
         # code referenced from mod9 videos by the professor
             # "Draw the Grid & Tic Tac Toe", "Import Functionalities", "Write the Code"
-        WIDTH = 638
-        HEIGHT = 708
         SQUARE_SIZE = 70
         BOARD_ROWS = 9
         BOARD_COLS = 9
@@ -41,7 +39,7 @@ class Board:
                     self.screen,
                     LINE_COLOR,
                     (0, i * SQUARE_SIZE),  # starting position
-                    (WIDTH, i * SQUARE_SIZE),  # ending position
+                    (self.width, i * SQUARE_SIZE),  # ending position
                     BOLDED_LINE_WIDTH # bolded line width
                 )
             else:
@@ -49,7 +47,7 @@ class Board:
                     self.screen,
                     LINE_COLOR,
                     (0, i * SQUARE_SIZE),  # starting position
-                    (WIDTH, i * SQUARE_SIZE),  # ending position
+                    (self.width, i * SQUARE_SIZE),  # ending position
                     BORDER_LINE_WIDTH # regular line width
                 )
 
@@ -60,7 +58,7 @@ class Board:
                     self.screen,
                     LINE_COLOR,
                     (j * SQUARE_SIZE, 0),  # starting position
-                    (j * SQUARE_SIZE, HEIGHT),  # ending position
+                    (j * SQUARE_SIZE, self.height),  # ending position
                     BOLDED_LINE_WIDTH # bolded line width
                 )
             else:
@@ -68,14 +66,14 @@ class Board:
                     self.screen,
                     LINE_COLOR,
                     (j * SQUARE_SIZE, 0), # starting position
-                    (j * SQUARE_SIZE, HEIGHT), # ending position
+                    (j * SQUARE_SIZE, self.height), # ending position
                     BORDER_LINE_WIDTH # regular line width
                 )
 
         # draw cells
         for i in range(self.width):
             for j in range(self.height):
-                self.cells[i][j].draw(self.screen)
+                self.cells[i][j].draw()
 
 
     def select(self, row, col):
