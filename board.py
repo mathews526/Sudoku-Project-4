@@ -1,5 +1,6 @@
 import pygame, sys
 from cell import Cell
+from sudoku_generator import generate_sudoku
 
 class Board:
     def __init__(self, width, height, screen, difficulty):
@@ -7,6 +8,14 @@ class Board:
         self.height = height
         self.screen = screen
         self.difficulty = difficulty
+
+        # How many cells to remove depending on difficulty
+        self.removed_cells = {"easy": 20, "medium": 40, "hard": 50}[difficulty]
+
+        self.board = generate_sudoku(9, self.removed_cells)
+        self.cells = [
+            [Cell(self.board[row][col], row, col, screen) for col in range(9)] for row in range(9)
+        ]
 
 
     def draw(self):
@@ -46,7 +55,9 @@ class Board:
         return True
 
     def update_board(self):
-        pass
+        self.board = [
+            [self.cells[row][col].value for col in range(9)] for row in range(9)
+        ]
 
 
     def find_empty(self):
