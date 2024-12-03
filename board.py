@@ -26,7 +26,7 @@ class Board:
         # draws every cell on this board
         # code referenced from mod9 videos by the professor
             # "Draw the Grid & Tic Tac Toe", "Import Functionalities", "Write the Code"
-        SQUARE_SIZE = 70
+        SQUARE_SIZE = 60
         BOARD_ROWS = 9
         BOARD_COLS = 9
         LINE_COLOR = (0, 0, 0)  # black
@@ -81,8 +81,8 @@ class Board:
             for c in range(9):
                 self.cells[r][c].selected = False
 
-        if 0 <= row < 9 and 0 <= col < 9:
-            self.cells[row][col].selected = True
+        self.selected_cell = self.cells[row][col]
+        self.cells[row][col].selected = True
 
 
     def click(self, x, y):
