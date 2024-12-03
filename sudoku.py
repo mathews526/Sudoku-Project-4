@@ -2,8 +2,8 @@ import pygame, sys
 from board import Board
 from sudoku_generator import generate_sudoku
 
-WIDTH = 600
-HEIGHT = 600
+WIDTH = 638
+HEIGHT = 708
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
