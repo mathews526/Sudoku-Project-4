@@ -88,7 +88,7 @@ class Board:
 
 
     def click(self, x, y):
-        if 0 <= x <= self.width and 0 <= y <= self.height:
+        if 0 <= x < self.width and 0 <= y < self.height:
             row = y // (self.height // 9)
             col = x // (self.width // 9)
             return row, col
