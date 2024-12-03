@@ -19,7 +19,60 @@ class Board:
 
 
     def draw(self):
-        pass
+        # draws an outline of the sudoku grid, with bold lines to delineate the 3x3 boxes
+        # draws every cell on this board
+        # code referenced from mod9 videos by the professor
+            # "Draw the Grid & Tic Tac Toe", "Import Functionalities", "Write the Code"
+        WIDTH = 638
+        HEIGHT = 708
+        SQUARE_SIZE = 70
+        BOARD_ROWS = 9
+        BOARD_COLS = 9
+        LINE_COLOR = (0, 0, 0)  # black
+        BORDER_LINE_WIDTH = 2  # skinny line
+        BOLDED_LINE_WIDTH = 5
+        # draw horizontal lines
+        for i in range(1, BOARD_ROWS):
+            if i == 3 and i == 6: # bold lines for every big square
+                pygame.draw.line(
+                    self.screen,
+                    LINE_COLOR,
+                    (0, i * SQUARE_SIZE),  # starting position
+                    (WIDTH, i * SQUARE_SIZE),  # ending position
+                    BOLDED_LINE_WIDTH # bolded line width
+                )
+            else:
+                pygame.draw.line(
+                    self.screen,
+                    LINE_COLOR,
+                    (0, i * SQUARE_SIZE),  # starting position
+                    (WIDTH, i * SQUARE_SIZE),  # ending position
+                    BORDER_LINE_WIDTH # regular line width
+                )
+
+        # draw vertical lines
+        for j in range(1, BOARD_COLS):
+            if j == 3 and j == 6: # bold lines for every big square
+                pygame.draw.line(
+                    self.screen,
+                    LINE_COLOR,
+                    (j * SQUARE_SIZE, 0),  # starting position
+                    (j * SQUARE_SIZE, HEIGHT),  # ending position
+                    BOLDED_LINE_WIDTH # bolded line width
+                )
+            else:
+                pygame.draw.line(
+                    self.screen,
+                    LINE_COLOR,
+                    (j * SQUARE_SIZE, 0), # starting position
+                    (j * SQUARE_SIZE, HEIGHT), # ending position
+                    BORDER_LINE_WIDTH # regular line width
+                )
+
+        # draw cells
+        for i in range(self.width):
+            for j in range(self.height):
+                self.cells[i][j].draw(self.screen)
 
 
     def select(self, row, col):
@@ -39,7 +92,15 @@ class Board:
 
 
     def sketch(self, value):
-        pass
+        # sets the sketched value of the current selected cell equal to user entered value
+        # will be displayed in the top left corner of the cell using the draw() function
+        rows = len(self.board)
+        cols = len(self.board[0])
+        for row in range(rows):
+            for col in range(cols):
+                if self.cells[row][col].selected:
+                    if self.board[row][col] == 0:
+                        self.cells[row][col].set_sketched_value(value)
 
 
     def place_number(self, value):
@@ -72,7 +133,13 @@ class Board:
 
 
     def find_empty(self):
-        pass
+        # finds an empty cell and returns its row and col as a tuple (x,y)
+        rows = len(self.board)
+        cols = len(self.board[0])
+        for row in range(rows):
+            for col in range(cols):
+                if self.cells[row][col] != 0:
+                    self.cells[row][col].value = self.cells[row][col].sketched_value
 
 
     def check_board(self):
