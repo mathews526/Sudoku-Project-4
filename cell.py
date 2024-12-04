@@ -11,10 +11,12 @@ class Cell:
         self.selected = False
 
     def set_cell_value(self, value):
-        self.value = value
+        if 0 <= value <= 9:
+            self.value = value
 
     def set_sketched_value(self, value):
-        self.sketched_value = value
+        if 0 <= value <= 9:
+            self.sketched_value = value
 
     def draw(self):
         font = pygame.font.Font(None, 40)
@@ -29,8 +31,8 @@ class Cell:
             self.screen.blit(num_surf, num_rect)
         elif self.sketched_value != 0:
             sketch_surf = font.render(str(self.sketched_value), 0, (150, 150, 150))
-            x_sketch_center = self.col * self.cell_size // 4
-            y_sketch_center = self.row * self.cell_size // 4
+            x_sketch_center = self.col * self.cell_size + 15
+            y_sketch_center = self.row * self.cell_size + 15
             sketch_rect = sketch_surf.get_rect(center=(x_sketch_center, y_sketch_center))
             self.screen.blit(sketch_surf, sketch_rect)
 
