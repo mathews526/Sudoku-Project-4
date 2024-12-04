@@ -238,10 +238,10 @@ if __name__ == '__main__':
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = event.pos
-                if exit_rect.collidepoint(x, y):
+                if exit_rect and exit_rect.collidepoint(x, y):
                     pygame.quit()
                     sys.exit()
-                elif restart_rect.collidepoint(x, y):
+                elif restart_rect and restart_rect.collidepoint(x, y):
                     difficulty = draw_game_start(screen)
                     board = Board(WIDTH, 540, screen, difficulty)
                     run = True
