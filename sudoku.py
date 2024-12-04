@@ -62,6 +62,19 @@ def draw_game_start(screen):
         pygame.display.update()
 
 
+def success(board):
+    if board.is_full():
+        if board.check_board():
+            return True
+        else:
+            return False
+    return None
+
+
+def draw_game_win():
+    pass
+
+
 def draw_game_over():
     pass
 
@@ -92,6 +105,8 @@ if __name__ == '__main__':
     while True:
         screen.fill(BG_COLOR)
         board.draw()
+
+        win_status = success(board)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
