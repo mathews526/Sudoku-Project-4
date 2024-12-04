@@ -25,55 +25,17 @@ class Board:
         # draws an outline of the sudoku grid, with bold lines to delineate the 3x3 boxes
         # draws every cell on this board
         # code referenced from mod9 videos by the professor
-            # "Draw the Grid & Tic Tac Toe", "Import Functionalities", "Write the Code"
         SQUARE_SIZE = 60
-        BOARD_ROWS = 9
-        BOARD_COLS = 9
         LINE_COLOR = (0, 0, 0)  # black
-        BORDER_LINE_WIDTH = 2  # skinny line
-        BOLDED_LINE_WIDTH = 5
-        # draw horizontal lines
-        for i in range(1, BOARD_ROWS):
-            if i == 3 and i == 6: # bold lines for every big square
-                pygame.draw.line(
-                    self.screen,
-                    LINE_COLOR,
-                    (0, i * SQUARE_SIZE),  # starting position
-                    (self.width, i * SQUARE_SIZE),  # ending position
-                    BOLDED_LINE_WIDTH # bolded line width
-                )
-            else:
-                pygame.draw.line(
-                    self.screen,
-                    LINE_COLOR,
-                    (0, i * SQUARE_SIZE),  # starting position
-                    (self.width, i * SQUARE_SIZE),  # ending position
-                    BORDER_LINE_WIDTH # regular line width
-                )
 
-        # draw vertical lines
-        for j in range(1, BOARD_COLS):
-            if j == 3 and j == 6: # bold lines for every big square
-                pygame.draw.line(
-                    self.screen,
-                    LINE_COLOR,
-                    (j * SQUARE_SIZE, 0),  # starting position
-                    (j * SQUARE_SIZE, self.height),  # ending position
-                    BOLDED_LINE_WIDTH # bolded line width
-                )
-            else:
-                pygame.draw.line(
-                    self.screen,
-                    LINE_COLOR,
-                    (j * SQUARE_SIZE, 0), # starting position
-                    (j * SQUARE_SIZE, self.height), # ending position
-                    BORDER_LINE_WIDTH # regular line width
-                )
+        for i in range(10):
+            line_width = 5 if i % 3 == 0 else 2
+            pygame.draw.line(self.screen, LINE_COLOR, (0, i * SQUARE_SIZE), (self.width, i * SQUARE_SIZE), line_width)
+            pygame.draw.line(self.screen, LINE_COLOR, (i * SQUARE_SIZE, 0), (i * SQUARE_SIZE, self.height), line_width)
 
-        # draw cells
-        for i in range(self.width):
-            for j in range(self.height):
-                self.cells[i][j].draw()
+        for row in range(9):
+            for col in range(9):
+                self.cells[row][col].draw()
 
 
     def select(self, row, col):
