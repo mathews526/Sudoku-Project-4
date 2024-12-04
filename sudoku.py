@@ -68,9 +68,9 @@ def success(board):
     board.update_board()
     if board.is_full():
         if board.check_board():
-            return True  # Game won
+            return "win"  # Game won
         else:
-            return False  # Game lost
+            return "loss"  # Game lost
     return None
 
 
@@ -156,7 +156,6 @@ def draw_game_over(screen):
     screen.blit(restart_surf, restart_rect)
 
     pygame.display.update()
-
     return restart_rect
 
 
@@ -189,14 +188,14 @@ if __name__ == '__main__':
         screen.fill(BG_COLOR)
         board.draw()
         reset_rect, restart_rect, exit_rect = draw_buttons(screen)
+        game_over_button = None
+        game_win_button = None
 
         win_status = success(board)
-        if win_status:
-            game_state = "win"
-            run = False
-        elif win_status is False:
-            game_state = "loss"
-            run = False
+        if win_status == "win":
+            game_win_button = draw_game_win(screen)
+        elif win_status == "loss":
+            game_over_button = draw_game_over(screen)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -212,6 +211,12 @@ if __name__ == '__main__':
                 elif exit_rect.collidepoint(x, y):
                     pygame.quit()
                     sys.exit()
+                elif game_over_button is not None and game_over_button.collidepoint(x, y):
+                    difficulty = draw_game_start(screen)
+                    board = Board(WIDTH, 540, screen, difficulty)
+                elif game_win_button is not None and game_win_button.collidepoint(x, y):
+                    pygame.quit()
+                    sys.exit()
                 else:
                     clicked_cell = board.click(x, y)
                     if clicked_cell:
@@ -221,30 +226,4 @@ if __name__ == '__main__':
             elif event.type == pygame.KEYDOWN:
                 key_events(event)
 
-        pygame.display.update()
-
-    exit_rect = None
-    restart_rect = None
-
-    if game_state == "win":
-        exit_rect = draw_game_win(screen)
-    elif game_state == "loss":
-        restart_rect = draw_game_over(screen)
-
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                x, y = event.pos
-                if exit_rect and exit_rect.collidepoint(x, y):
-                    pygame.quit()
-                    sys.exit()
-                elif restart_rect and restart_rect.collidepoint(x, y):
-                    difficulty = draw_game_start(screen)
-                    board = Board(WIDTH, 540, screen, difficulty)
-                    run = True
-                    game_state = None
-                    break
         pygame.display.update()
