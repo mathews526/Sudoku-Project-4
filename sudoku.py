@@ -65,11 +65,12 @@ def draw_game_start(screen):
 
 
 def success(board):
+    board.update_board()
     if board.is_full():
         if board.check_board():
-            return True
+            return True  # Game won
         else:
-            return False
+            return False  # Game lost
     return None
 
 
@@ -113,22 +114,23 @@ def draw_game_win(screen):
 
     game_win_surf = game_win_font.render(text, 0, LINE_COLOR)
     game_win_rect = game_win_surf.get_rect(
-        center=(WIDTH // 2, HEIGHT // 2 + 50)
+        center=(WIDTH // 2, HEIGHT // 2 - 150)
     )
     screen.blit(game_win_surf, game_win_rect)
 
-    exit_surf = game_win_font.render(
-        "EXIT",
-        0,
-        LINE_COLOR
-    )
-    exit_rect = exit_surf.get_rect(
-        center=(WIDTH // 2, HEIGHT // 2 + 150)
-    )
+    exit_text = game_win_font.render("Exit", 0, (255, 255, 255))
+
+    exit_surf = pygame.Surface((exit_text.get_size()[0] + 20, exit_text.get_size()[1] + 20))
+    exit_surf.fill(LINE_COLOR)
+    exit_surf.blit(exit_text, (10, 10))
+
+    exit_rect = exit_surf.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 50))
+
     screen.blit(exit_surf, exit_rect)
 
     pygame.display.update()
 
+    return exit_rect
 
 
 def draw_game_over(screen):
@@ -139,21 +141,23 @@ def draw_game_over(screen):
 
     game_over_surf = game_over_font.render(text, 0, LINE_COLOR)
     game_over_rect = game_over_surf.get_rect(
-        center=(WIDTH // 2, HEIGHT // 2 + 50)
+        center=(WIDTH // 2, HEIGHT // 2 - 150)
     )
     screen.blit(game_over_surf, game_over_rect)
 
-    restart_surf = game_over_font.render(
-        "RESTART",
-        0,
-        LINE_COLOR
-    )
-    restart_rect = restart_surf.get_rect(
-        center=(WIDTH // 2, HEIGHT // 2 + 150)
-    )
+    restart_text = game_over_font.render("Restart", 0, (255, 255, 255))
+
+    restart_surf = pygame.Surface((restart_text.get_size()[0] + 20, restart_text.get_size()[1] + 20))
+    restart_surf.fill(LINE_COLOR)
+    restart_surf.blit(restart_text, (10, 10))
+
+    restart_rect = restart_surf.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 50))
+
     screen.blit(restart_surf, restart_rect)
 
     pygame.display.update()
+
+    return restart_rect
 
 
 def key_events(key_event):
@@ -178,19 +182,21 @@ if __name__ == '__main__':
     board = Board(WIDTH, 540, screen, difficulty)
     board.draw()
 
+    run = True
+    game_state = None
 
-    while True:
+    while run:
         screen.fill(BG_COLOR)
         board.draw()
         reset_rect, restart_rect, exit_rect = draw_buttons(screen)
 
         win_status = success(board)
         if win_status:
-            draw_game_win(screen)
-            break
+            game_state = "win"
+            run = False
         elif win_status is False:
-            draw_game_over(screen)
-            break
+            game_state = "loss"
+            run = False
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -215,6 +221,30 @@ if __name__ == '__main__':
             elif event.type == pygame.KEYDOWN:
                 key_events(event)
 
-
         pygame.display.update()
 
+    exit_rect = None
+    restart_rect = None
+
+    if game_state == "win":
+        exit_rect = draw_game_win(screen)
+    elif game_state == "loss":
+        restart_rect = draw_game_over(screen)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                x, y = event.pos
+                if exit_rect.collidepoint(x, y):
+                    pygame.quit()
+                    sys.exit()
+                elif restart_rect.collidepoint(x, y):
+                    difficulty = draw_game_start(screen)
+                    board = Board(WIDTH, 540, screen, difficulty)
+                    run = True
+                    game_state = None
+                    break
+        pygame.display.update()
