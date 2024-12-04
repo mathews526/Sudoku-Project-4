@@ -74,12 +74,9 @@ class Board:
 
 
     def place_number(self, value):
-        for row in range(9):
-            for col in range(9):
-                if self.cells[row][col].selected:
-                    if self.cells[row][col] == 0:
-                        self.cells[row][col].value = value
-                    return
+        if self.selected_cell and self.unedited_board[self.selected_cell.row][self.selected_cell.col] == 0:
+            self.selected_cell.set_cell_value(value) # Places entered value
+            self.selected_cell.set_sketched_value(0) # Removes sketch
 
 
     def reset_to_original(self):
