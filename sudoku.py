@@ -106,54 +106,52 @@ def draw_buttons(screen):
 
 
 def draw_game_win(screen):
-    if winner != 0:
-        text = "Game Won!"
+    text = "Game Won!"
 
-        game_win_font = pygame.font.Font(None, 100)
-        screen.fill(BG_COLOR)
+    game_win_font = pygame.font.Font(None, 100)
+    screen.fill(BG_COLOR)
 
-        game_win_surf = game_win_font.render(text, 0, LINE_COLOR)
-        game_win_rect = game_win_surf.get_rect(
-            center=(WIDTH // 2, HEIGHT // 2 + 50)
-        )
-        screen.blit(game_win_surf, game_win_rect)
+    game_win_surf = game_win_font.render(text, 0, LINE_COLOR)
+    game_win_rect = game_win_surf.get_rect(
+        center=(WIDTH // 2, HEIGHT // 2 + 50)
+    )
+    screen.blit(game_win_surf, game_win_rect)
 
-        exit_surf = game_win_font.render(
-            "EXIT",
-            0,
-            LINE_COLOR
-        )
-        exit_rect = exit_surf.get_rect(
-            center=(WIDTH // 2, HEIGHT // 2 + 150)
-        )
-        screen.blit(exit_surf, exit_rect)
+    exit_surf = game_win_font.render(
+        "EXIT",
+        0,
+        LINE_COLOR
+    )
+    exit_rect = exit_surf.get_rect(
+        center=(WIDTH // 2, HEIGHT // 2 + 150)
+    )
+    screen.blit(exit_surf, exit_rect)
 
     pygame.display.update()
 
 
 
 def draw_game_over(screen):
-    if winner == 0:
-        text = "Game Over :("
+    text = "Game Over :("
 
-        game_over_font = pygame.font.Font(None, 100)
-        screen.fill(BG_COLOR)
+    game_over_font = pygame.font.Font(None, 100)
+    screen.fill(BG_COLOR)
 
-        game_over_surf = game_over_font.render(text, 0, LINE_COLOR)
-        game_over_rect = game_over_surf.get_rect(
-            center=(WIDTH // 2, HEIGHT // 2 + 50)
-        )
-        screen.blit(game_over_surf, game_over_rect)
+    game_over_surf = game_over_font.render(text, 0, LINE_COLOR)
+    game_over_rect = game_over_surf.get_rect(
+        center=(WIDTH // 2, HEIGHT // 2 + 50)
+    )
+    screen.blit(game_over_surf, game_over_rect)
 
-        restart_surf = game_over_font.render(
-            "RESTART",
-            0,
-            LINE_COLOR
-        )
-        restart_rect = restart_surf.get_rect(
-            center=(WIDTH // 2, HEIGHT // 2 + 150)
-        )
-        screen.blit(restart_surf, restart_rect)
+    restart_surf = game_over_font.render(
+        "RESTART",
+        0,
+        LINE_COLOR
+    )
+    restart_rect = restart_surf.get_rect(
+        center=(WIDTH // 2, HEIGHT // 2 + 150)
+    )
+    screen.blit(restart_surf, restart_rect)
 
     pygame.display.update()
 
@@ -169,10 +167,8 @@ def key_events(key_event):
         elif key_event.key == pygame.K_BACKSPACE:
             board.clear()
 
-if __name__ == '__main__':
-    game_over = False
-    winner = 0
 
+if __name__ == '__main__':
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Sudoku")
