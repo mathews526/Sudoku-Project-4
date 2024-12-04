@@ -82,9 +82,10 @@ class Board:
     def reset_to_original(self):
         for row in range(9):
             for col in range(9):
-                self.cells[row][col].value = self.board[row][col]
+                self.cells[row][col].value = self.unedited_board[row][col]
                 self.cells[row][col].sketched_value = 0
                 self.cells[row][col].selected = False
+        self.update_board()
 
 
     def is_full(self):
