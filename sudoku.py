@@ -1,5 +1,6 @@
 import pygame, sys
 from board import Board
+from sudoku_generator import generate_sudoku
 
 WIDTH = 540
 HEIGHT = 640
@@ -110,7 +111,32 @@ def draw_game_win(screen):
 
 
 def draw_game_over(screen):
-    pass
+    def draw_game_over(screen, winner):
+        game_over_font = pygame.font.Font(None, 100)
+        screen.fill(BG_COLOR)
+
+        if winner != 0:
+            text = "Game Won!"
+        else:
+            text = "Game Over :("
+
+        game_over_surf = game_over_font.render(text, 0, LINE_COLOR)
+        game_over_rect = game_over_surf.get_rect(
+            center=(WIDTH // 2, HEIGHT // 2 + 50)
+        )
+        screen.blit(game_over_surf, game_over_rect)
+
+        restart_surf = game_over_font.render(
+            "RESTART",
+            0,
+            LINE_COLOR
+        )
+        restart_rect = restart_surf.get_rect(
+            center=(WIDTH // 2, HEIGHT // 2 + 150)
+        )
+        screen.blit(restart_surf, restart_rect)
+
+        pygame.display.update()
 
 
 def key_events(key_event):
@@ -125,12 +151,15 @@ def key_events(key_event):
             board.clear()
 
 if __name__ == '__main__':
+    game_over = False
+    winner = 0
 
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Sudoku")
 
     difficulty = draw_game_start(screen) # Calls function to draw start screen
+    sudoku_board = generate_sudoku(9, difficulty) # From sudoku_generator
 
     board = Board(WIDTH, 540, screen, difficulty)
     board.draw()
@@ -171,6 +200,13 @@ if __name__ == '__main__':
 
             elif event.type == pygame.KEYDOWN:
                 key_events(event)
+        if game_over:
+            if board.board == sudoku_board[1]:
+                winner = 1
+            elif board.board != sudoku_board[1]:
+                winner = 0
+            pygame.display.update()
+            draw_game_over(screen, winner)
 
         pygame.display.update()
 
