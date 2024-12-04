@@ -89,10 +89,10 @@ class Board:
 
     def is_full(self):
         #checks if board is completely filled
+        self.update_board()  # Sync the Cell values with the board
         for row in self.board:
-            for cell in row:
-                if cell == 0: #if cell is 0, it's empty
-                    return False
+            if 0 in row:  # Check for any empty cells
+                return False
         return True
 
 
