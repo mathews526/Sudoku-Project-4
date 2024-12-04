@@ -106,29 +106,54 @@ def draw_buttons(screen):
 
 
 def draw_game_win(screen):
-    pass
+    if winner != 0:
+        text = "Game Won!"
+
+        game_win_font = pygame.font.Font(None, 100)
+        screen.fill(BG_COLOR)
+
+        game_win_surf = game_win_font.render(text, 0, LINE_COLOR)
+        game_win_rect = game_win_surf.get_rect(
+            center=(WIDTH // 2, HEIGHT // 2 + 50)
+        )
+        screen.blit(game_win_surf, game_win_rect)
+
+        exit_surf = game_win_font.render(
+            "EXIT",
+            0,
+            LINE_COLOR
+        )
+        exit_rect = exit_surf.get_rect(
+            center=(WIDTH // 2, HEIGHT // 2 + 150)
+        )
+        screen.blit(exit_surf, exit_rect)
+
+    pygame.display.update()
+
 
 
 def draw_game_over(screen):
+    if winner == 0:
+        text = "Game Over :("
 
-    game_over_font = pygame.font.Font(None, 100)
-    screen.fill(BG_COLOR)
+        game_over_font = pygame.font.Font(None, 100)
+        screen.fill(BG_COLOR)
 
-    game_over_surf = game_over_font.render("Game Over", 0, LINE_COLOR)
-    game_over_rect = game_over_surf.get_rect(
+        game_over_surf = game_over_font.render(text, 0, LINE_COLOR)
+        game_over_rect = game_over_surf.get_rect(
             center=(WIDTH // 2, HEIGHT // 2 + 50)
         )
-    screen.blit(game_over_surf, game_over_rect)
+        screen.blit(game_over_surf, game_over_rect)
 
-    restart_surf = game_over_font.render(
-        "RESTART",
-        0,
-        LINE_COLOR
-    )
-    restart_rect = restart_surf.get_rect(
-        center=(WIDTH // 2, HEIGHT // 2 + 150)
-    )
-    screen.blit(restart_surf, restart_rect)
+        restart_surf = game_over_font.render(
+            "RESTART",
+            0,
+            LINE_COLOR
+        )
+        restart_rect = restart_surf.get_rect(
+            center=(WIDTH // 2, HEIGHT // 2 + 150)
+        )
+        screen.blit(restart_surf, restart_rect)
 
     pygame.display.update()
 
@@ -145,6 +170,8 @@ def key_events(key_event):
             board.clear()
 
 if __name__ == '__main__':
+    game_over = False
+    winner = 0
 
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -154,6 +181,7 @@ if __name__ == '__main__':
 
     board = Board(WIDTH, 540, screen, difficulty)
     board.draw()
+
 
     while True:
         screen.fill(BG_COLOR)
@@ -193,3 +221,4 @@ if __name__ == '__main__':
 
 
         pygame.display.update()
+
