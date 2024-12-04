@@ -1,8 +1,8 @@
 import pygame, sys
 from board import Board
 
-WIDTH = 638
-HEIGHT = 708
+WIDTH = 540
+HEIGHT = 640
 BG_COLOR = (255, 255, 245)
 DIFFICULTY = "medium"
 
@@ -10,7 +10,7 @@ pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Sudoku")
 
-board = Board(9, 9, screen, DIFFICULTY)
+board = Board(WIDTH, 540, screen, DIFFICULTY)
 board.draw()
 
 
