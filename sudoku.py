@@ -159,7 +159,6 @@ if __name__ == '__main__':
     pygame.display.set_caption("Sudoku")
 
     difficulty = draw_game_start(screen) # Calls function to draw start screen
-    sudoku_board = generate_sudoku(9, difficulty) # From sudoku_generator
 
     board = Board(WIDTH, 540, screen, difficulty)
     board.draw()
@@ -200,13 +199,7 @@ if __name__ == '__main__':
 
             elif event.type == pygame.KEYDOWN:
                 key_events(event)
-        if game_over:
-            if board.board == sudoku_board[1]:
-                winner = 1
-            elif board.board != sudoku_board[1]:
-                winner = 0
-            pygame.display.update()
-            draw_game_over(screen, winner)
+
 
         pygame.display.update()
 
