@@ -1,6 +1,5 @@
 import pygame, sys
 from board import Board
-from sudoku_generator import generate_sudoku
 
 WIDTH = 540
 HEIGHT = 640
@@ -107,18 +106,38 @@ def draw_buttons(screen):
 
 
 def draw_game_win(screen):
-    pass
+    if winner != 0:
+        text = "Game Won!"
+
+        game_win_font = pygame.font.Font(None, 100)
+        screen.fill(BG_COLOR)
+
+        game_win_surf = game_win_font.render(text, 0, LINE_COLOR)
+        game_win_rect = game_win_surf.get_rect(
+            center=(WIDTH // 2, HEIGHT // 2 + 50)
+        )
+        screen.blit(game_win_surf, game_win_rect)
+
+        exit_surf = game_win_font.render(
+            "EXIT",
+            0,
+            LINE_COLOR
+        )
+        exit_rect = exit_surf.get_rect(
+            center=(WIDTH // 2, HEIGHT // 2 + 150)
+        )
+        screen.blit(exit_surf, exit_rect)
+
+    pygame.display.update()
+
 
 
 def draw_game_over(screen):
-    def draw_game_over(screen, winner):
+    if winner == 0:
+        text = "Game Over :("
+
         game_over_font = pygame.font.Font(None, 100)
         screen.fill(BG_COLOR)
-
-        if winner != 0:
-            text = "Game Won!"
-        else:
-            text = "Game Over :("
 
         game_over_surf = game_over_font.render(text, 0, LINE_COLOR)
         game_over_rect = game_over_surf.get_rect(
@@ -136,7 +155,7 @@ def draw_game_over(screen):
         )
         screen.blit(restart_surf, restart_rect)
 
-        pygame.display.update()
+    pygame.display.update()
 
 
 def key_events(key_event):
