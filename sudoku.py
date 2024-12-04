@@ -180,13 +180,30 @@ def draw_game_over(screen): # Displays game over screen
 
 def key_events(key_event):
     if board.selected_cell:
-        if key_event.key == pygame.K_RETURN: # If the user presses enter, the number will change to a regular value
+
+        selected_row, selected_col = board.selected_cell.row, board.selected_cell.col
+
+        # Arrow key navigation
+        if key_event.key == pygame.K_UP: # Move up
+            if selected_row > 0:
+                board.select(selected_row -1, selected_col)
+        elif key_event.key == pygame.K_DOWN: # Move down
+            if selected_row < 8:
+                board.select(selected_row + 1, selected_col)
+        elif key_event.key == pygame.K_LEFT: # Move left
+            if selected_col > 0:
+                board.select(selected_row, selected_col - 1)
+        elif key_event.key == pygame.K_RIGHT: # Move right
+            if selected_col < 8:
+                board.select(selected_row, selected_col + 1)
+
+        elif key_event.key == pygame.K_RETURN: # If the user presses enter, the number will change to a regular value
             if board.selected_cell.sketched_value != 0:
                 board.place_number(board.selected_cell.sketched_value)
         elif pygame.K_1 <= key_event.key <= pygame.K_9: # Only allows numbers 1 through 9
             sketch_value = key_event.key - pygame.K_0
             board.sketch(sketch_value) # Updates the board with a sketched value
-        elif key_event.key == pygame.K_BACKSPACE: # Clears the cell value if backspace is pressed
+        elif key_event.key == pygame.K_BACKSPACE or key_event.key == pygame.K_DELETE: # Clears the cell value if backspace/delete is pressed
             board.clear()
 
 
